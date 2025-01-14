@@ -1,0 +1,315 @@
+/* Base Styles */
+body {
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 10px;
+  min-width: 300px;
+  transition: all 0.3s ease;
+}
+
+/* Light Theme */
+body.theme-light {
+  background-color: #ffffff;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+}
+
+body.theme-light .container {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+body.theme-light textarea {
+  background-color: #f8f9fa;
+  color: #333;
+  border-color: #e0e0e0;
+}
+
+body.theme-light button {
+  background-color: #4a90e2;
+  color: #fff;
+  border-color: #4a90e2;
+  font-family: inherit;
+}
+
+body.theme-light button:hover {
+  background-color: #357abd;
+}
+
+body.theme-light h1 {
+  color: #2c3e50;
+}
+
+body.theme-light .task-item {
+  background-color: #f8f9fa;
+  border-color: #e0e0e0;
+  color: #333;
+  margin: 4px 0;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+body.theme-light .task-time {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+body.theme-light .theme-control label {
+  color: #333;
+}
+
+body.theme-light .persist-control {
+  background-color: #f8f9fa;
+  border-color: #e0e0e0;
+}
+
+/* Dark Theme */
+body.theme-dark {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+}
+
+body.theme-dark .container {
+  background-color: #2d2d2d;
+  border-color: #444;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+body.theme-dark textarea {
+  background-color: #333;
+  color: #fff;
+  border-color: #444;
+}
+
+body.theme-dark button {
+  background-color: #444;
+  color: #fff;
+  border-color: #666;
+  font-family: inherit;
+}
+
+body.theme-dark button:hover {
+  background-color: #666;
+}
+
+body.theme-dark h1 {
+  color: #ffffff;
+}
+
+body.theme-dark .task-item {
+  background-color: #333;
+  border-color: #444;
+  color: #fff;
+  margin: 4px 0;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+body.theme-dark .task-time {
+  color: #aaa;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+body.theme-dark .theme-control label {
+  color: #fff;
+}
+
+/* Matrix Theme */
+body.theme-matrix {
+  background-color: #000;
+  color: #0f0;
+}
+
+body.theme-matrix .container {
+  background-color: #000;
+  border-color: #0f0;
+}
+
+body.theme-matrix textarea {
+  background-color: #111;
+  color: #0f0;
+  border-color: #0f0;
+}
+
+body.theme-matrix button {
+  background-color: #0f0;
+  color: #000;
+  border-color: #0f0;
+}
+
+body.theme-matrix button:hover {
+  background-color: #000;
+  color: #0f0;
+}
+
+.container {
+  background-color: #000;
+  border: 1px solid #0f0;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0;
+  color: #0f0;
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  background-color: #111;
+  color: #0f0;
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  resize: vertical;
+  margin: 10px 0;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  background-color: #0f0;
+  color: #000;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+}
+
+button:hover {
+  background-color: #000;
+  color: #0f0;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  background-color: #000;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid #0f0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.modal-content h2 {
+  color: #0f0;
+  font-size: 1.2em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #0f0;
+}
+
+.setting-group {
+  margin-bottom: 20px;
+}
+
+.setting-group h3 {
+  color: #0f0;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+.setting-item {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.setting-item input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #0f0;
+  background: #000;
+  cursor: pointer;
+}
+
+.setting-item input[type="checkbox"]:checked {
+  background: #0f0;
+}
+
+.setting-item input[type="number"] {
+  background: #000;
+  border: 1px solid #0f0;
+  color: #0f0;
+  padding: 5px;
+  width: 60px;
+  font-family: 'Courier New', monospace;
+}
+
+.setting-group p {
+  color: #0f0;
+  margin: 10px 0;
+}
+
+#clear-storage {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Settings Button */
+#open-settings {
+  background-color: #0f0;
+  color: #000;
+  border: 1px solid #0f0;
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#open-settings:hover {
+  background-color: #000;
+  color: #0f0;
+}
+
+.close-modal {
+  color: #0f0;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#task-list {
+  margin-top: 10px;
+}
+
+/* Matrix-style text */
+label, p {
+  font-family: 'Courier New', monospace;
+}
+
+/* Settings specific text color */
+.setting-group label, 
+.setting-group p {
+  color: #0f0;
+}

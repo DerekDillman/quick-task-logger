@@ -1,0 +1,246 @@
+body {
+  width: 300px;
+  min-height: 200px;
+  max-height: 900px; /* Max height for 1080p screen */
+  margin: 0;
+  padding: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.theme-light {
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+
+.theme-dark {
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+
+.theme-matrix {
+  background-color: #0a0a0a;
+  color: #00ff00;
+}
+
+h1 {
+  margin: 0 0 16px 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+#task-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+  background: white;
+  color: #343a40;
+}
+
+.theme-dark #task-input {
+  background: #212529;
+  border-color: #495057;
+  color: #f8f9fa;
+}
+
+.theme-matrix #task-input {
+  background: #0f0f0f;
+  border-color: #00ff00;
+  color: #00ff00;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+/* Light theme buttons */
+.theme-light button {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.theme-light button:hover {
+  background-color: #357abd;
+}
+
+.theme-light #open-settings {
+  background-color: #f8f9fa;
+  color: #4a90e2;
+  border: 2px solid #4a90e2;
+}
+
+.theme-light #open-settings:hover {
+  background-color: #4a90e2;
+  color: white;
+}
+
+/* Dark theme buttons */
+.theme-dark button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.theme-dark button:hover {
+  background-color: #5a6268;
+}
+
+.theme-dark #open-settings {
+  background-color: #343a40;
+  color: #6c757d;
+  border: 2px solid #6c757d;
+}
+
+.theme-dark #open-settings:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Matrix theme buttons */
+.theme-matrix button {
+  background-color: #003300;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+}
+
+.theme-matrix button:hover {
+  background-color: #004400;
+}
+
+.theme-matrix #open-settings {
+  background-color: #001100;
+}
+
+.theme-matrix #open-settings:hover {
+  background-color: #002200;
+}
+
+.theme-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.task-item {
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.theme-light .task-item {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.theme-dark .task-item {
+  background-color: #212529;
+}
+
+.theme-matrix .task-item {
+  background-color: #0f0f0f;
+  border: 1px solid #00ff00;
+}
+
+.task-text {
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.task-time {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.theme-dark .task-time {
+  color: #adb5bd;
+}
+
+.theme-matrix .task-time {
+  color: #00cc00;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Settings Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: #f8f9fa;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.theme-dark .modal-content {
+  background-color: #343a40;
+}
+
+.theme-matrix .modal-content {
+  background-color: #0a0a0a;
+  border: 1px solid #00ff00;
+}
+
+.close-modal {
+  float: right;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.close-modal:hover {
+  color: #dc3545;
+}
+
+.settings-group {
+  margin-bottom: 16px;
+}
+
+.settings-group label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+#task-list {
+  margin-top: 16px;
+}

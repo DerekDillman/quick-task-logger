@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Task Logger</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Quick Task Logger</h1>
+    <textarea id="task-input" placeholder="What are you working on?" autofocus></textarea>
+    
+    <div class="theme-controls">
+      <label class="radio-label"><input type="radio" name="theme" value="light"> Light</label>
+      <label class="radio-label"><input type="radio" name="theme" value="dark"> Dark</label>
+      <label class="radio-label"><input type="radio" name="theme" value="matrix"> Matrix</label>
+    </div>
+
+    <div class="button-group">
+      <button id="add-task">Add Task</button>
+      <button id="export-json">Export TXT</button>
+      <button id="export-md">Export Markdown</button>
+    </div>
+
+    <button id="open-settings">⚙️ Settings</button>
+
+    <div id="task-list"></div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Settings</h2>
+      
+      <div class="settings-group">
+        <h3>Display</h3>
+        <label>
+          Show last
+          <input type="number" id="history-limit" min="1" max="50" value="10">
+          tasks
+        </label>
+      </div>
+      
+      <div class="settings-group">
+        <h3>Storage</h3>
+        <p>Tasks are stored in your browser's sync storage.</p>
+        <button id="clear-storage">Clear All Tasks</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
