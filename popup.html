@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,38 +9,84 @@
 <body>
   <div class="container">
     <h1>Quick Task Logger</h1>
-    <textarea id="task-input" placeholder="What are you working on?" autofocus></textarea>
     
-    <div class="theme-controls">
+    <div class="input-group">
+      <label for="category-select" class="visually-hidden">Task Category</label>
+      <select id="category-select" class="category-select" aria-label="Task Category">
+        <!-- Categories will be populated by JS -->
+      </select>
+      
+      <label for="task-input" class="visually-hidden">Task Description</label>
+      <textarea id="task-input" placeholder="What are you working on?" aria-label="Task Description" autofocus></textarea>
+      
+      <div class="additional-fields show">
+        <div class="field-row">
+          <input type="text" id="company-input" placeholder="Company (optional)" aria-label="Company">
+          <input type="text" id="ticket-input" placeholder="Ticket # (optional)" aria-label="Ticket Number">
+        </div>
+        
+        <label for="notes-input" class="visually-hidden">Additional Notes</label>
+        <textarea id="notes-input" placeholder="Additional notes (optional)" aria-label="Additional Notes" rows="2"></textarea>
+        
+        <div class="field-row">
+          <input type="text" id="link-input" placeholder="Related link (optional)" aria-label="Related Link">
+          <select id="quick-links" aria-label="Quick Links">
+            <option value="">Quick Links</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <fieldset class="theme-controls">
+      <legend class="visually-hidden">Theme Selection</legend>
       <label class="radio-label"><input type="radio" name="theme" value="light"> Light</label>
       <label class="radio-label"><input type="radio" name="theme" value="dark"> Dark</label>
-      <label class="radio-label"><input type="radio" name="theme" value="matrix"> Matrix</label>
-    </div>
+      <label class="radio-label"><input type="radio" name="theme" value="matrix" checked> Matrix</label>
+    </fieldset>
 
     <div class="button-group">
       <button id="add-task">Add Task</button>
       <button id="export-json">Export TXT</button>
-      <button id="export-md">Export Markdown</button>
+      <button id="export-md">Export MD</button>
     </div>
 
-    <button id="open-settings">⚙️ Settings</button>
+    <div class="button-group">
+      <button id="view-all-tasks">📋 View All Tasks</button>
+      <button id="open-settings">⚙️ Settings</button>
+    </div>
 
-    <div id="task-list"></div>
+    <div id="task-list" role="region" aria-label="Recent Tasks"></div>
   </div>
 
   <!-- Settings Modal -->
-  <div id="settings-modal" class="modal">
+  <div id="settings-modal" class="modal" role="dialog" aria-labelledby="settings-title" aria-hidden="true">
     <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h2>Settings</h2>
+      <span class="close-modal" role="button" aria-label="Close settings">&times;</span>
+      <h2 id="settings-title">Settings</h2>
       
       <div class="settings-group">
         <h3>Display</h3>
-        <label>
+        <label for="history-limit">
           Show last
-          <input type="number" id="history-limit" min="1" max="50" value="10">
+          <input type="number" id="history-limit" min="1" max="50" value="10" aria-label="Number of tasks to show">
           tasks
         </label>
+      </div>
+      
+      <div class="settings-group">
+        <h3>Quick Links</h3>
+        <p>Add your frequently used links:</p>
+        <div id="quick-links-list"></div>
+        <div class="add-link-form">
+          <input type="text" id="new-link-name" placeholder="Link name">
+          <input type="text" id="new-link-url" placeholder="https://...">
+          <button id="add-quick-link">Add Link</button>
+        </div>
+      </div>
+      
+      <div class="settings-group">
+        <h3>Keyboard Shortcut</h3>
+        <p>Use <strong>Ctrl+Shift+L</strong> (Windows) or <strong>Cmd+Shift+L</strong> (Mac) to open Quick Task Logger</p>
       </div>
       
       <div class="settings-group">

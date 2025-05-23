@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Tasks - Quick Task Logger</title>
+  <link rel="stylesheet" href="tasks.css">
+</head>
+<body class="theme-matrix">
+  <div class="container">
+    <div class="header">
+      <h1>Task History</h1>
+      <div class="header-controls">
+        <button id="back-to-popup">← Back</button>
+        <button id="export-all">Export All</button>
+      </div>
+    </div>
+    
+    <div class="filters" role="region" aria-label="Task Filters">
+      <div class="filter-group">
+        <label for="filter-category">Category:</label>
+        <select id="filter-category" aria-label="Filter by category">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-company">Company:</label>
+        <input type="text" id="filter-company" placeholder="Filter by company" aria-label="Filter by company">
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-ticket">Ticket:</label>
+        <input type="text" id="filter-ticket" placeholder="Filter by ticket" aria-label="Filter by ticket">
+      </div>
+      
+      <div class="filter-group">
+        <span id="date-range-label">Date Range:</span>
+        <div class="date-range-inputs">
+          <label for="filter-date-from" class="visually-hidden">Start Date</label>
+          <input type="date" id="filter-date-from" aria-label="Start date" aria-describedby="date-range-label">
+          <span>to</span>
+          <label for="filter-date-to" class="visually-hidden">End Date</label>
+          <input type="date" id="filter-date-to" aria-label="End date" aria-describedby="date-range-label">
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-search">Search:</label>
+        <input type="text" id="filter-search" placeholder="Search tasks..." aria-label="Search tasks">
+      </div>
+      
+      <button id="clear-filters">Clear Filters</button>
+    </div>
+    
+    <div class="stats" role="region" aria-label="Task Statistics">
+      <div class="stat-item">
+        <span class="stat-label">Total Tasks:</span>
+        <span id="total-tasks" class="stat-value" aria-live="polite">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Today:</span>
+        <span id="today-tasks" class="stat-value" aria-live="polite">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">This Week:</span>
+        <span id="week-tasks" class="stat-value" aria-live="polite">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Companies:</span>
+        <span id="unique-companies" class="stat-value" aria-live="polite">0</span>
+      </div>
+    </div>
+    
+    <div id="task-container" class="task-container" role="main" aria-label="Task List">
+      <!-- Tasks will be populated here -->
+    </div>
+  </div>
+  
+  <script src="tasks.js"></script>
+</body>
+</html>
