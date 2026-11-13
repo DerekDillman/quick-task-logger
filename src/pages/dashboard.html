@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Quick Task Logger · Dashboard</title>
+		<link rel="icon" href="../../icons/icon32.png" />
+		<link rel="stylesheet" href="app.css" />
+		<link rel="stylesheet" href="dashboard.css" />
+	</head>
+	<body>
+		<aside class="side">
+			<div class="brand"><img src="../../icons/icon48.png" alt="" width="26" height="26" /> <span>Task Logger</span></div>
+			<nav aria-label="Sections">
+				<a href="#log" data-view="log">🗒 Log</a>
+				<a href="#reports" data-view="reports">📊 Reports</a>
+				<a href="#timesheet" data-view="timesheet">🗓 Timesheet</a>
+				<a href="#settings" data-view="settings">⚙ Settings</a>
+			</nav>
+			<div class="side-stats" id="side-stats"></div>
+			<div class="side-foot muted">
+				<div><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> popup</div>
+				<div><kbd>tl</kbd> + space in address bar</div>
+				<div><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd> stop timer</div>
+				<div><kbd>/</kbd> search · <kbd>N</kbd> new entry</div>
+			</div>
+		</aside>
+
+		<main>
+			<!-- ============================== LOG -->
+			<section id="view-log" class="view" hidden>
+				<header class="vhead">
+					<h1>Log</h1>
+					<div class="row">
+						<button class="btn" id="new-entry" type="button">＋ New entry</button>
+						<button class="btn" id="export-csv" type="button">⬇ CSV</button>
+						<button class="btn" id="export-txt" type="button">⬇ TXT</button>
+					</div>
+				</header>
+				<div class="filters">
+					<input class="input" id="flt-q" type="search" placeholder="Search text, notes, client, ticket, tags…  ( / )" />
+					<select class="input" id="flt-range">
+						<option value="all">All time</option>
+						<option value="today">Today</option>
+						<option value="yesterday">Yesterday</option>
+						<option value="week">This week</option>
+						<option value="lastweek">Last week</option>
+						<option value="month">This month</option>
+						<option value="lastmonth">Last month</option>
+						<option value="last30">Last 30 days</option>
+					</select>
+					<select class="input" id="flt-cat"><option value="">All categories</option></select>
+					<select class="input" id="flt-client"><option value="">All clients</option></select>
+					<select class="input" id="flt-bill">
+						<option value="">Billable + non</option>
+						<option value="yes">Billable only</option>
+						<option value="no">Non-billable</option>
+					</select>
+				</div>
+				<div class="sumbar" id="log-sum"></div>
+				<div id="log-list" class="daylist"></div>
+				<button class="btn" id="more-btn" type="button" hidden>Show more</button>
+			</section>
+
+			<!-- ============================== REPORTS -->
+			<section id="view-reports" class="view" hidden>
+				<header class="vhead">
+					<h1>Reports</h1>
+					<div class="row">
+						<select class="input" id="rep-range">
+							<option value="today">Today</option>
+							<option value="yesterday">Yesterday</option>
+							<option value="week" selected>This week</option>
+							<option value="lastweek">Last week</option>
+							<option value="month">This month</option>
+							<option value="lastmonth">Last month</option>
+							<option value="last30">Last 30 days</option>
+						</select>
+						<button class="btn" id="rep-copy" type="button">📋 Copy Markdown</button>
+						<button class="btn" id="rep-standup" type="button">📋 Copy standup</button>
+						<button class="btn" id="rep-csv" type="button">⬇ CSV</button>
+					</div>
+				</header>
+				<div class="cards" id="rep-cards"></div>
+				<div class="two">
+					<div class="panel"><h2>By category</h2><div id="rep-cat" class="bars"></div></div>
+					<div class="panel"><h2>By client</h2><div id="rep-client" class="bars"></div></div>
+				</div>
+				<div class="panel"><h2>By day</h2><div id="rep-day" class="cols"></div></div>
+				<div class="panel">
+					<h2>Markdown preview</h2>
+					<pre id="rep-md" class="md"></pre>
+				</div>
+			</section>
+
+			<!-- ============================== TIMESHEET -->
+			<section id="view-timesheet" class="view" hidden>
+				<header class="vhead">
+					<h1>Timesheet</h1>
+					<div class="row">
+						<button class="btn" id="ts-prev" type="button" aria-label="Previous week">◀</button>
+						<span id="ts-label" class="ts-label"></span>
+						<button class="btn" id="ts-next" type="button" aria-label="Next week">▶</button>
+						<select class="input" id="ts-group">
+							<option value="category">Rows: category</option>
+							<option value="client">Rows: client</option>
+							<option value="ticket">Rows: ticket</option>
+						</select>
+						<button class="btn" id="ts-copy" type="button">📋 Copy (TSV for Excel)</button>
+					</div>
+				</header>
+				<div class="panel scroll"><table class="ts" id="ts-table"></table></div>
+				<p class="muted" id="ts-note"></p>
+			</section>
+
+			<!-- ============================== SETTINGS -->
+			<section id="view-settings" class="view" hidden>
+				<header class="vhead"><h1>Settings</h1></header>
+				<div class="settings">
+					<div class="panel">
+						<h2>General</h2>
+						<label class="field">Theme
+							<select class="input" id="s-theme">
+								<option value="auto">Auto (follow OS)</option>
+								<option value="dark">Dark</option>
+								<option value="light">Light</option>
+								<option value="matrix">Matrix</option>
+							</select>
+						</label>
+						<label class="field">Recent entries in popup <input class="input" id="s-history" type="number" min="1" max="50" /></label>
+						<label class="field">Default category <select class="input" id="s-defcat"></select></label>
+						<label class="field">Report rounding
+							<select class="input" id="s-round">
+								<option value="0">None (exact minutes)</option>
+								<option value="6">Up to 6 min (0.1 h)</option>
+								<option value="15">Up to 15 min</option>
+								<option value="30">Up to 30 min</option>
+							</select>
+						</label>
+						<label class="check"><input type="checkbox" id="s-billable" /> New entries are billable by default</label>
+						<label class="check"><input type="checkbox" id="s-autoticket" /> Detect ticket # from the current tab URL</label>
+					</div>
+
+					<div class="panel">
+						<h2>Categories</h2>
+						<p class="muted">One per line. Order = popup order. Type <code>#name</code> in the popup to pick one (fuzzy: <code>#breakfix</code> → Break/Fix).</p>
+						<textarea class="input" id="s-cats" rows="9"></textarea>
+					</div>
+
+					<div class="panel">
+						<h2>Reminders</h2>
+						<label class="check"><input type="checkbox" id="r-on" /> Nudge me when nothing has been logged</label>
+						<div class="inline">
+							<label class="field">Every <select class="input" id="r-int"><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option><option value="120">2 h</option></select></label>
+							<label class="field">From <input class="input" id="r-start" type="time" /></label>
+							<label class="field">To <input class="input" id="r-end" type="time" /></label>
+						</div>
+						<div class="days" id="r-days"></div>
+						<p class="muted">Skipped while a timer is running. Workdays also drive the standup's "previous day".</p>
+					</div>
+
+					<div class="panel">
+						<h2>Quick links</h2>
+						<p class="muted">One per line: <code>Name | https://url</code></p>
+						<textarea class="input mono" id="s-links" rows="5"></textarea>
+					</div>
+
+					<div class="panel wide">
+						<h2>Ticket URL patterns</h2>
+						<p class="muted">One per line: <code>Name | regex</code>. The first capture group is the ticket id. Built-ins cover Freshservice, ServiceDesk Plus, Zendesk, ConnectWise, Autotask, HaloPSA, Jira, ServiceNow and GitHub.</p>
+						<textarea class="input mono" id="s-patterns" rows="7"></textarea>
+						<div class="row"><input class="input" id="pat-test" placeholder="Paste a ticket URL to test…" /><span id="pat-out" class="chip tick"></span></div>
+					</div>
+
+					<div class="panel wide">
+						<h2>Data</h2>
+						<p class="muted" id="data-info"></p>
+						<div class="row wrap">
+							<button class="btn" id="backup" type="button">⬇ Backup (JSON)</button>
+							<label class="btn">⬆ Import JSON / CSV<input type="file" id="import" accept=".json,.csv,application/json,text/csv" hidden /></label>
+							<button class="btn danger" id="clear" type="button">Delete all entries…</button>
+						</div>
+						<p class="muted">Everything stays in this browser profile (no servers, no accounts, no analytics). Import merges and skips duplicates.</p>
+					</div>
+				</div>
+				<div class="savebar"><span class="muted" id="save-state">Changes save automatically.</span></div>
+			</section>
+		</main>
+
+		<!-- ============================== EDIT DIALOG -->
+		<dialog id="edit" aria-labelledby="edit-title">
+			<form method="dialog" id="edit-form">
+				<h2 id="edit-title">Edit entry</h2>
+				<label class="field span2">Description <textarea class="input" id="e-text" rows="2" required></textarea></label>
+				<label class="field">Category <input class="input" id="e-cat" list="dl-cats" /></label>
+				<label class="field">Client / dept <input class="input" id="e-client" list="dl-clients" /></label>
+				<label class="field">Ticket # <input class="input mono" id="e-ticket" /></label>
+				<label class="field">Tags <input class="input" id="e-tags" placeholder="space separated" /></label>
+				<label class="field">Start <input class="input" id="e-start" type="datetime-local" required /></label>
+				<label class="field">Duration (min) <input class="input" id="e-dur" type="number" min="0" step="1" placeholder="0 = note only" /></label>
+				<label class="field span2">Link <input class="input" id="e-link" type="url" /></label>
+				<label class="field span2">Notes <textarea class="input" id="e-notes" rows="4"></textarea></label>
+				<label class="check"><input type="checkbox" id="e-bill" /> Billable</label>
+				<p class="muted span2" id="e-running" hidden>This timer is still running. Saving a duration stops it.</p>
+				<div class="dlg-actions span2">
+					<button class="btn danger" type="button" id="e-del">Delete</button>
+					<span class="grow"></span>
+					<button class="btn" value="cancel" formnovalidate>Cancel</button>
+					<button class="btn primary" value="save" id="e-save">Save <kbd>Ctrl+Enter</kbd></button>
+				</div>
+			</form>
+			<datalist id="dl-cats"></datalist>
+			<datalist id="dl-clients"></datalist>
+		</dialog>
+
+		<script type="module" src="dashboard.js"></script>
+	</body>
+</html>

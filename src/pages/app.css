@@ -1,0 +1,295 @@
+/* app.css - shared design system for the popup and dashboard.
+   Themes set data-theme on <html>: dark (default), light, matrix. "auto" resolves in JS. */
+:root,
+[data-theme='dark'] {
+	--bg: #0f1115;
+	--bg-2: #161a21;
+	--bg-3: #1e232c;
+	--line: #2a303b;
+	--fg: #e7eaf0;
+	--fg-2: #a3acbb;
+	--fg-3: #6c7586;
+	--accent: #4fb3ff;
+	--accent-fg: #06121d;
+	--ok: #3ecf8e;
+	--warn: #f5a524;
+	--danger: #ff5d5d;
+	--run: #ff5d5d;
+	--chip: #222834;
+	--focus: 0 0 0 2px rgba(79, 179, 255, 0.55);
+	--font: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+	--mono: 'Cascadia Mono', 'JetBrains Mono', Consolas, ui-monospace, monospace;
+	color-scheme: dark;
+}
+[data-theme='light'] {
+	--bg: #f7f8fa;
+	--bg-2: #ffffff;
+	--bg-3: #eef1f5;
+	--line: #dde2ea;
+	--fg: #17202c;
+	--fg-2: #4b5666;
+	--fg-3: #8590a0;
+	--accent: #0b6bcb;
+	--accent-fg: #ffffff;
+	--chip: #e8edf4;
+	--focus: 0 0 0 2px rgba(11, 107, 203, 0.4);
+	color-scheme: light;
+}
+[data-theme='matrix'] {
+	--bg: #020702;
+	--bg-2: #061006;
+	--bg-3: #0b1a0b;
+	--line: #123612;
+	--fg: #39ff6a;
+	--fg-2: #28c24f;
+	--fg-3: #1a7d33;
+	--accent: #39ff6a;
+	--accent-fg: #020702;
+	--ok: #39ff6a;
+	--chip: #0b220b;
+	--focus: 0 0 0 2px rgba(57, 255, 106, 0.5);
+	--font: var(--mono);
+	color-scheme: dark;
+}
+[data-theme='matrix'] body {
+	text-shadow: 0 0 6px rgba(57, 255, 106, 0.25);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+/* .btn / .chip set display, which would otherwise override the hidden attribute */
+[hidden] {
+	display: none !important;
+}
+html,
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--fg);
+	font: 13px/1.45 var(--font);
+}
+button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+a {
+	color: var(--accent);
+}
+:focus-visible {
+	outline: none;
+	box-shadow: var(--focus);
+}
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+.muted {
+	color: var(--fg-3);
+}
+.mono {
+	font-family: var(--mono);
+}
+kbd {
+	font: 11px var(--mono);
+	padding: 1px 5px;
+	border: 1px solid var(--line);
+	border-bottom-width: 2px;
+	border-radius: 4px;
+	background: var(--bg-3);
+	color: var(--fg-2);
+}
+
+/* ---------- form controls ---------- */
+.input,
+select.input,
+textarea.input {
+	width: 100%;
+	background: var(--bg-2);
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	padding: 8px 10px;
+	transition: border-color 0.15s;
+}
+.input:focus {
+	border-color: var(--accent);
+	outline: none;
+	box-shadow: var(--focus);
+}
+textarea.input {
+	resize: vertical;
+	min-height: 54px;
+}
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	border: 1px solid var(--line);
+	background: var(--bg-3);
+	border-radius: 8px;
+	padding: 7px 12px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+.btn:hover {
+	border-color: var(--fg-3);
+}
+.btn:active {
+	transform: translateY(1px);
+}
+.btn.primary {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: var(--accent-fg);
+	font-weight: 600;
+}
+.btn.danger {
+	color: var(--danger);
+}
+.btn.ghost {
+	background: transparent;
+	border-color: transparent;
+	color: var(--fg-2);
+}
+.btn.ghost:hover {
+	background: var(--bg-3);
+}
+.btn.sm {
+	padding: 3px 8px;
+	font-size: 12px;
+	border-radius: 6px;
+}
+.btn[disabled] {
+	opacity: 0.5;
+	cursor: default;
+}
+.icon-btn {
+	border: 0;
+	background: transparent;
+	color: var(--fg-3);
+	cursor: pointer;
+	padding: 3px 5px;
+	border-radius: 5px;
+	line-height: 1;
+}
+.icon-btn:hover {
+	color: var(--fg);
+	background: var(--bg-3);
+}
+
+/* ---------- chips / pills ---------- */
+.chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 1px 8px;
+	border-radius: 999px;
+	background: var(--chip);
+	color: var(--fg-2);
+	font-size: 11.5px;
+	white-space: nowrap;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.chip.cat {
+	color: var(--accent);
+}
+.chip.bill {
+	color: var(--ok);
+}
+.chip.tick {
+	font-family: var(--mono);
+}
+
+/* ---------- task rows ---------- */
+.task {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 2px 10px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	border: 1px solid transparent;
+}
+.task:hover {
+	background: var(--bg-2);
+	border-color: var(--line);
+}
+.task .t-text {
+	font-weight: 500;
+	word-break: break-word;
+}
+.task .t-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	grid-column: 1 / -1;
+}
+.task .t-side {
+	display: flex;
+	align-items: flex-start;
+	gap: 2px;
+	color: var(--fg-3);
+	font-variant-numeric: tabular-nums;
+}
+.task .t-actions {
+	visibility: hidden;
+	display: flex;
+}
+.task:hover .t-actions,
+.task:focus-within .t-actions {
+	visibility: visible;
+}
+.task.running {
+	border-color: var(--run);
+	background: color-mix(in srgb, var(--run) 8%, transparent);
+}
+
+/* ---------- toast ---------- */
+#toast {
+	position: fixed;
+	left: 50%;
+	bottom: 14px;
+	transform: translate(-50%, 140%);
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	padding: 8px 14px;
+	border-radius: 10px;
+	background: var(--fg);
+	color: var(--bg);
+	font-weight: 500;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+	transition: transform 0.25s ease;
+	z-index: 50;
+	max-width: calc(100% - 24px);
+}
+#toast.show {
+	transform: translate(-50%, 0);
+}
+#toast button {
+	border: 0;
+	background: transparent;
+	color: var(--accent);
+	font-weight: 700;
+	cursor: pointer;
+	filter: invert(1) hue-rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		transition: none !important;
+		animation: none !important;
+	}
+}
