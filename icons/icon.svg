@@ -1,4 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <rect width="48" height="48" fill="#2196F3"/>
-  <path fill="#fff" d="M24 34h2v-6h6v-2h-6v-6h-2v6h-6v2h6v6zm-12-8v4h24v-4H12z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Quick Task Logger icon: a log sheet with a running clock. Source for icons/*.png (scripts/build-icons.mjs). -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2a3d"/>
+      <stop offset="1" stop-color="#0d141f"/>
+    </linearGradient>
+    <linearGradient id="ac" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6cc4ff"/>
+      <stop offset="1" stop-color="#2f8fe0"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#bg)"/>
+  <rect x="4.5" y="4.5" width="119" height="119" rx="27.5" fill="none" stroke="#2c3e55"/>
+  <!-- log lines -->
+  <rect x="24" y="32" width="46" height="9" rx="4.5" fill="url(#ac)"/>
+  <rect x="24" y="52" width="34" height="9" rx="4.5" fill="#8fa3bd"/>
+  <rect x="24" y="72" width="26" height="9" rx="4.5" fill="#5d708a"/>
+  <!-- clock -->
+  <circle cx="84" cy="80" r="26" fill="#0d141f" stroke="url(#ac)" stroke-width="8"/>
+  <path d="M84 66v15l10 6" fill="none" stroke="#e7eaf0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<title>Quick Task Logger</title>
+		<link rel="stylesheet" href="app.css" />
+		<link rel="stylesheet" href="popup.css" />
+	</head>
+	<body>
+		<header class="top">
+			<div class="brand">
+				<img src="../../icons/icon32.png" alt="" width="20" height="20" />
+				<span>Task Logger</span>
+			</div>
+			<div class="today" id="today" title="Logged today"></div>
+			<button class="icon-btn" id="open-dash" type="button" title="Open dashboard (Alt+Shift+L)" aria-label="Open dashboard">⤢</button>
+		</header>
+
+		<section id="running" class="running" hidden aria-live="polite"></section>
+
+		<main class="compose">
+			<label for="q" class="sr-only">What did you work on?</label>
+			<textarea id="q" class="input q" rows="2" placeholder="What are you working on?  e.g. Reset MFA for Sam #support @Accounting !4521 15m" autofocus></textarea>
+			<div class="preview" id="preview" aria-live="polite"></div>
+
+			<div class="cats" id="cats" role="group" aria-label="Category"></div>
+
+			<details id="more">
+				<summary>Details <span class="muted" id="more-sum"></span></summary>
+				<div class="grid">
+					<label>Client / dept<input class="input" id="f-client" list="clients" autocomplete="off" /></label>
+					<label>Ticket #<input class="input mono" id="f-ticket" autocomplete="off" /></label>
+					<label class="span2">Notes<textarea class="input" id="f-notes" rows="2"></textarea></label>
+					<label class="span2"
+						>Link
+						<div class="row">
+							<input class="input" id="f-link" type="url" placeholder="https://" />
+							<button class="btn sm" id="attach" type="button" title="Attach the current tab">📎 This tab</button>
+						</div>
+					</label>
+					<label class="row check"><input type="checkbox" id="f-billable" /> Billable</label>
+					<select class="input" id="quick-links" aria-label="Quick links" hidden></select>
+				</div>
+				<datalist id="clients"></datalist>
+			</details>
+
+			<div class="actions">
+				<button class="btn primary" id="log" type="button">Log <kbd>Enter</kbd></button>
+				<button class="btn" id="start" type="button">▶ Start timer <kbd>Ctrl+Enter</kbd></button>
+			</div>
+		</main>
+
+		<section class="recent">
+			<div class="recent-head">
+				<span>Recent</span>
+				<span class="muted" id="recent-count"></span>
+			</div>
+			<div id="list"></div>
+		</section>
+
+		<footer class="foot">
+			<button class="btn ghost sm" id="copy-standup" type="button">📋 Copy standup</button>
+			<button class="btn ghost sm" id="open-report" type="button">📊 Today's report</button>
+			<button class="btn ghost sm" id="open-settings" type="button">⚙ Settings</button>
+		</footer>
+
+		<script type="module" src="popup.js"></script>
+	</body>
+</html>

@@ -1,95 +1,130 @@
-# Quick Task Logger - MSP Edition
+# Quick Task Logger
 
-A powerful Chrome/Edge extension designed for MSP professionals to efficiently log and track daily tasks with enhanced categorization, metadata, and export capabilities.
+A keyboard-first work log and timer for IT pros, as a Chrome / Edge extension (Manifest V3).
+Log what you did in about two seconds, then turn it into a timesheet, a standup or a manager report.
+Your data stays in your browser profile.
+
+![Popup, dark and light](docs/screenshots/popup.png)
+
+## What's new in v3
+
+v3 is a rewrite of the v2 "MSP Edition".
+
+| v2 problem | v3 |
+| --- | --- |
+| All tasks lived in one `chrome.storage.sync` key (8 KB limit), so logging **silently stopped after ~30-50 tasks** | Unlimited `chrome.storage.local`. v2 data is migrated automatically on update and the old copy is left untouched as a safety net |
+| A task was just a timestamp, with no duration | Durations (`45m`, `1h30`, `1:15`) plus a start/stop **timer** with a live toolbar badge |
+| Six fields to fill in | **One-line quick entry**: `Reset MFA #support @Accounting !4521 15m +mfa $` |
+| Ticket numbers typed by hand | **Auto-detected from the current tab**: Freshservice, ServiceDesk Plus, Zendesk, ConnectWise, Autotask, HaloPSA, Jira, ServiceNow, GitHub, plus your own regexes |
+| The popup rendered task text as raw HTML (HTML injection), and link schemes weren't checked | No HTML sinks at all, http(s)-only links, strict extension CSP, and CSV formula-injection guarding |
+| Had to open the popup to log | Address bar (`tl ` + text), right-click "Log this page / selection / link", and keyboard shortcuts |
+| Export only | **Reports** (by category, client and day), a **weekly timesheet** (copies straight into Excel), a **standup generator**, plus JSON backup and JSON/CSV import |
+| No way to fix a mistake | Edit dialog, undo on delete, start a past task again with one click |
 
 ## Features
 
-### Core Functionality
-- **Quick task logging** with category selection
-- **Extended metadata fields**:
-  - Company name
-  - Ticket number
-  - Additional notes
-  - Related links
-- **Quick Links dropdown** for frequently accessed URLs
-- **Global hotkey** support (Ctrl+Shift+L / Cmd+Shift+L)
-- **Full task history view** with advanced filtering
+**Logging**
 
-### Themes
-- Light theme for bright environments
-- Dark theme for reduced eye strain
-- Matrix theme for that classic terminal look
+- **Quick entry:** one line, parsed as you type.
+  - `#category` matches fuzzily, so `#breakfix` becomes Break/Fix.
+  - `@client` (or department), `!ticket`, `+tag`, a duration, `$` for billable, and a URL become the task's fields.
+  - Quote multi-word values: `@"Acme Corp"`.
+- **Timer:** `Ctrl+Enter` starts one (any running timer stops first). `Alt+Shift+K` stops it from anywhere. The toolbar badge shows elapsed minutes.
+- **Context:** "📎 This tab" attaches the current page. The ticket number fills itself in when the tab is a ticket.
+- **Drafts:** a half-typed entry survives closing the popup.
+- **Reminders (optional):** a "What are you working on?" nudge during work hours when nothing has been logged. Skipped while a timer runs; one click to snooze.
 
-### Export Options
-- Export to TXT format
-- Export to Markdown
-- Export to CSV (from task history view)
-- Timestamped filenames for easy organization
+**Review**
 
-### Task Management
-- Categorized tasks (Break/Fix, Administration, Network, etc.)
-- Configurable task history display limit
-- Search and filter capabilities
-- Date range filtering
-- Company and ticket filtering
+- **Dashboard log:** grouped by day. Search everything with `/`; filter by date range, category, client and billable.
+- **Reports:** totals, billable %, average per day, bars by category and client, a column chart by day, and a Markdown summary you can copy.
+- **Timesheet:** a Monday-to-Sunday grid of decimal hours, with rows by category, client or ticket. Optional rounding of each entry (6, 15 or 30 min). Copy as TSV and paste into Excel.
+- **Standup:** one click copies "Yesterday / Today / Blockers". "Yesterday" is the previous workday, so on Monday it reads Friday.
 
-## Installation
+**Data**
 
-### Chrome
-1. Clone this repository or download as ZIP
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right
-4. Click "Load unpacked" and select the extension directory
+- CSV and TXT export of the filtered view, plus a full JSON backup.
+- Import JSON backups, v3 CSV or the **v2 CSV export**. Duplicates are skipped.
+- Themes: Auto (follows the OS), Dark, Light, Matrix.
 
-### Microsoft Edge
-1. Clone this repository or download as ZIP
-2. Open Edge and navigate to `edge://extensions/`
-3. Enable "Developer mode" in the bottom left
-4. Click "Load unpacked" and select the extension directory
+![Dashboard log](docs/screenshots/log.png)
+![Reports](docs/screenshots/reports.png)
+![Timesheet](docs/screenshots/timesheet.png)
 
-## Usage
+## Install
 
-### Basic Task Logging
-1. Click the extension icon or press `Ctrl+Shift+L` (Windows) / `Cmd+Shift+L` (Mac)
-2. Select a category from the dropdown
-3. Enter your task description
-4. Optionally fill in:
-   - Company name
-   - Ticket number
-   - Additional notes
-   - Related link (or select from Quick Links)
-5. Press Enter or click "Add Task"
+1. Clone or download this repo.
+2. Open `chrome://extensions` (or `edge://extensions`) and turn on **Developer mode**.
+3. Click **Load unpacked** and select the repo folder (the one with `manifest.json`).
+4. Optional: pin the icon. If a shortcut doesn't fire, set it in `chrome://extensions/shortcuts`; another extension may already own the key.
 
-### Viewing Task History
-1. Click "📋 View All Tasks" in the extension popup
-2. Use filters to find specific tasks:
-   - Filter by category
-   - Filter by company
-   - Search by ticket number
-   - Select date ranges
-3. Export filtered results as CSV
+Upgrading from v2: load v3 over the same folder, or use **Reload** on the existing extension. Your tasks and categories migrate automatically. To move data from a different browser or profile, export CSV in v2 and import it in v3 under Settings → Data.
 
-### Managing Quick Links
-1. Click "⚙️ Settings" in the extension popup
-2. Scroll to "Quick Links" section
-3. Add frequently used URLs with custom names
-4. Access them quickly from the dropdown when logging tasks
+## Shortcuts
 
-### Keyboard Shortcuts
-- **Open extension**: `Ctrl+Shift+L` (Windows) / `Cmd+Shift+L` (Mac)
-- **Add task**: `Enter` (when in task description field)
-- **Add task with line break**: `Shift+Enter`
+| Where | Keys | Action |
+| --- | --- | --- |
+| Anywhere | `Ctrl+Shift+L` (`⌘⇧L`) | Open the popup |
+| Anywhere | `Alt+Shift+K` | Stop the running timer |
+| Anywhere | `Alt+Shift+L` | Open the dashboard |
+| Address bar | `tl` + `Space` + text + `Enter` | Log without opening anything |
+| Popup | `Enter` / `Ctrl+Enter` / `Shift+Enter` | Log / start timer / new line |
+| Dashboard | `/` · `N` · `Ctrl+Enter` | Search · new entry · save in the edit dialog |
 
-## Configuration
+## Quick-entry syntax
 
-### Settings Available
-- **History Limit**: Number of recent tasks shown in popup (1-50)
-- **Theme**: Choose between Light, Dark, or Matrix themes
-- **Quick Links**: Manage your frequently accessed URLs
+```
+Swapped failing SSD in Sam's laptop #breakfix @"Front Office" !INC-4521 1h15 +hardware $
+```
 
-## Data Storage
-- Tasks are stored in Chrome's sync storage
-- Data syncs across devices when signed into Chrome/Edge
-- Use "Clear All Tasks" in settings to reset
+| Token | Meaning | Examples |
+| --- | --- | --- |
+| `#name` | category (fuzzy match; unknown names create a new one) | `#network` `#admin` `#"Vendor Mgmt"` |
+| `@name` | client / company / department | `@Acme` `@"Big Corp"` |
+| `!id` | ticket / work order | `!4521` `!INC0012345` |
+| `+tag` | tags (repeatable) | `+vpn` `+mfa` |
+| duration | time **already spent**, ending now | `45m` `2h` `1.5h` `1h30` `1:15` |
+| `$` | billable | |
+| URL | link | `https://…` |
 
-## File Structure
+With no duration, the entry is an instant note (0 min). Use the timer for work still in progress.
+
+## Privacy and security
+
+- No servers, accounts, analytics or remote code. Data is kept in `chrome.storage.local` in your browser profile.
+- Permissions are kept small:
+  - `storage` and `unlimitedStorage`
+  - `alarms` (badge and reminders)
+  - `notifications`
+  - `contextMenus`
+  - `activeTab`: reads the current tab's URL and title **only** when you open the popup or use the menu
+- Not requested: host permissions, `tabs` and content scripts.
+- The extension page CSP is `script-src 'self'`. User text is only ever written with `textContent`. Links are restricted to http(s). CSV cells beginning with `= + - @` are escaped so Excel won't run them as formulas.
+- Back up regularly (Settings → Data → Backup). Removing the extension deletes its data.
+
+## Development
+
+```
+npm test                                   # 13 unit tests (Node 20+, zero dependencies)
+powershell -File scripts\package.ps1       # tests + store-ready zip in dist\
+node scripts/build-icons.mjs <playwright-core> [chrome.exe]   # re-render icons/*.png from icons/icon.svg
+```
+
+```
+manifest.json
+src/
+  background.js        service worker: migration, badge, omnibox, context menu, commands, reminders
+  lib/
+    parse.js           quick-entry parser (pure)
+    model.js           task schema, v2 migration, link safety, ticket detection (pure)
+    report.js          CSV/JSON import-export, reports, standup (pure)
+    time.js            date ranges and formatting (pure)
+    store.js           the only chrome.storage access, race-safe read-modify-write
+    dom.js, ui.js      safe DOM helpers and the shared task row
+  pages/
+    popup.*            toolbar popup
+    dashboard.*        Log / Reports / Timesheet / Settings
+tests/lib.test.mjs     node:test suite for the pure modules
+```
+
+The pure modules have no `chrome.*` calls, so they run in Node for testing. Everything that touches storage goes through `store.js`.

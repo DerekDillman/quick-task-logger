@@ -3,3 +3,6 @@ node_modules/
 *.log
 .vscode/
 .idea/
+# packaged builds (scripts/package.ps1)
+dist/
+*.zip
